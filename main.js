@@ -29,10 +29,14 @@ function enviar() {
       return userCredential.user.getIdToken(); // Obtém o token de autenticação
     })
     .then(idToken => {
+      
+      if(confirm("Tem certeza?")) {
       enviarDados(idToken); // Chama a função para enviar os dados
+      }
     })
     .catch(error => {
       console.error("Erro de autenticação:", error);
+      alert("Você não tem acesso a este recurso, ou sua senha e e-mail de acesso estão erradas.")
     });
 }
 
@@ -71,8 +75,10 @@ function enviarDados(idToken) {
     .then(response => response.json())
     .then(data => {
       console.log("Dados enviados com sucesso:", data);
+      alert("A postagem foi enviada com sucesso e está disponível para todos os alunos.")
     })
     .catch(error => {
       console.error("Erro ao enviar dados:", error);
+      alert("erro ao enviar a postagem")
     });
 }
