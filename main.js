@@ -21,6 +21,7 @@ firebase.auth().signInWithEmailAndPassword(email, senha)
   })
   .catch(error => {
     console.error("Erro de autenticação:", error);
+    alert("Tivemos um problema, talvez você não tem acesso a este recurso, por favor verifique se o e-mail e a senha estão corretos.")
   });
   
 }
@@ -60,6 +61,7 @@ const link = document.getElementById('link').value;
   .then(response => response.json())
   .then(data => {
     console.log("Dados enviados com sucesso:", data);
+    alert("A postagem foi enviada, todos os alunos poderão ver agora.")
   })
   .catch(error => {
     console.error("Erro ao enviar dados:", error);
