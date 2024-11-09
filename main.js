@@ -20,11 +20,13 @@ firebase.auth().signInWithEmailAndPassword(email, senha)
     }
   })
   .catch(error => {
+    
     console.error("Erro de autenticação:", error);
-    alert("Tivemos um problema, talvez você não tem acesso a este recurso, por favor verifique se o e-mail e a senha estão corretos.")
+    
   });
   
 }
+
 
 function enviarDados(idToken) {
   
@@ -42,7 +44,7 @@ const link = document.getElementById('link').value;
   
   
   
-  let posterID = Math.fl(Math.random()*3000)+1
+  let posterID = Math.floor(Math.random()*3000)+1
   const url = 'https://escola-97256-default-rtdb.firebaseio.com/postes/'+posterID+'.json';
   const dados = {
     IMG: imagem,
@@ -65,5 +67,6 @@ const link = document.getElementById('link').value;
   })
   .catch(error => {
     console.error("Erro ao enviar dados:", error);
+    alert("ouve um erro ao enviar ")
   });
 }
