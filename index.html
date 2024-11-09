@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Painel Admin Escolar</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="manifest" href="app.json">
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-storage.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+  
+  <script>
+const data = new Date 
+
+let dia = data.getDate()
+let mes = data.getMonth() +1
+let ano = data.getFullYear()
+let hora = data.getHours()
+let minuto = data.getMinutes()
+  // Your web app's Firebase configuration
+  const firebaseConfig = {
+    apiKey: "AIzaSyDWDe3o7EB5vUfAZ1dNzj7nLZ4Ieh0m6Lg",
+    authDomain: "escola-97256.firebaseapp.com",
+    databaseURL: "https://escola-97256-default-rtdb.firebaseio.com",
+    projectId: "escola-97256",
+    storageBucket: "escola-97256.appspot.com",
+    messagingSenderId: "765009682973",
+    appId: "1:765009682973:web:d245f17dcdde0a28959cf4"
+  };
+
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+
+    function enviar() {
+      const email = document.getElementById('email').value;
+      const senha = document.getElementById('senha').value;
+
+      // Autenticação do usuário
+      firebase.auth().signInWithEmailAndPassword(email, senha)
+        .then(userCredential => {
+          return userCredential.user.getIdToken(); // Obtém o token de autenticação
+        })
+        .then(idToken => {
+          enviarDados(idToken); // Chama a função para enviar os dados
+        })
+        .catch(error => {
+          console.error("Erro de autenticação:", error);
+        });
+    }
+
+    function enviarDados(idToken) {
+      const imagem = document.getElementById('imagem').files[0];
+      const legenda = document.getElementById('legenda').value;
+      const link = document.getElementById('link').value;
+
+      // Upload da imagem ao Firebase Storage
+      const storageRef = firebase.storage().ref('imagens/' + imagem.name);
+      storageRef.put(imagem)
+        .then(snapshot => {
+          return snapshot.ref.getDownloadURL(); // Obtém a URL da imagem
+        })
+        .then(urlImagem => {
+          // Dados a serem enviados ao Firebase Realtime Database
+          let posterID = Math.floor(Math.random() * 3000) + 1;
+          const url = 'https://escola-97256-default-rtdb.firebaseio.com/postes/' + posterID + '/.json';
+          const dados = {
+            IMG: urlImagem, // URL da imagem
+            LG: legenda,
+            Link: link,
+            Dia: dia,
+            Mes: mes,
+            Ano: ano,
+            Hora: hora,
+            Minuto: minuto
+          };
+
+          return fetch(url, {
+            method: 'PATCH',
+            
+            body: JSON.stringify(dados)
+          });
+        })
+        .then(response => response.json())
+        .then(data => {
+          console.log("Dados enviados com sucesso:", data);
+        })
+        .catch(error => {
+          console.error("Erro ao enviar dados:", error);
+        });
+    }
+  </script>
+</head>
+<body>
+  <div id="painel-container">
+    <h2 id="titulo-painel">Painel Administrativo Escolar</h2>
+
+    <label for="email">E-mail:</label>
+    <input type="email" id="email" placeholder="Digite seu e-mail">
+    <br>
+
+    <label for="senha">Senha:</label>
+    <input type="password" id="senha" placeholder="Digite sua senha">
+
+    <br><hr>
+
+    <label for="imagem">Escolher Imagem:</label>
+    <input type="file" id="imagem" name="imagem" accept="image/*">
+
+    <label for="legenda">Legenda da Imagem:</label>
+    <textarea id="legenda" name="legenda" placeholder="Escreva a legenda da imagem..."></textarea>
+
+    <label for="link">Link:</label>
+    <input type="url" id="link" name="link" placeholder="Insira o link...">
+
+    <button onclick="enviar()" id="botao-enviar">Enviar Dados</button>
+  <br><br>
+  <a href="https://dashboard.onesignal.com/apps?page=1">Enviar notificações</a>
+  </div>
+</body>
+</html>

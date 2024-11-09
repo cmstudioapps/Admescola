@@ -1,0 +1,41 @@
+{
+  "name": "App João Rocha",
+  "short_name": "App João Rocha",
+  "description": "Aplicativo de gerenciamento escolar para a plataforma da Escola João Rocha.",
+  "start_url": "index.html",
+  "display": "standalone",
+  "background_color": "#00C795",
+  "theme_color": "#26FF00",
+  "icons": [
+    {
+      "src": "https://cdn-icons-png.flaticon.com/512/1197/1197398.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "{
+  "name": "App João Rocha",
+  "short_name": "App João Rocha",
+  "description": "Aplicativo de gerenciamento escolar para a plataforma da Escola João Rocha.",
+  "start_url": "index.html",
+  "display": "standalone",
+  "background_color": "#00C795",
+  "theme_color": "#26FF00",
+  "icons": [
+    {
+      "src": "https://cdn-icons-png.flaticon.com/512/1197/1197398.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "https://cdn-icons-png.flaticon.com/512/1197/1197398.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+},
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
